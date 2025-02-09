@@ -1,0 +1,26 @@
+:root {
+  --color-primary: #7C4DFF;
+  --color-secondary: #B388FF;
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #F1C40F;
+  --color-background: #1A1A1A;
+  --color-card-background: rgba(255, 255, 255, 0.1);
+  --color-success: #00C853;
+  --color-warning: #FF5252;
+  --color-border: rgba(255, 255, 255, 0.2);
+  --color-highlight: #F1C40F;
+}
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+  body {
+    font-family: 'Poppins', sans-serif;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  body, p, a {
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  

@@ -1,0 +1,43 @@
+@let localTickets = signalTickets();
+
+<!-- <section class="task-list-section">
+  <h2>Lista de Tickets</h2>
+  <ul class="task-list">
+    @for (task of localTasks; track task.task_id) {
+      <li class="task-item">
+        <div class="task-info">
+          <span class="task-title">{{ task.title }}</span>
+          <span class="task-status" [class.completed]="task.status">
+            {{ task.status ? 'Completada' : 'Pendiente' }}
+          </span>
+        </div>
+        <button class="modify-button" [routerLink]="['/tasks', task.task_id]">Modificar</button>
+      </li>
+    } @empty {
+      <li class="no-tasks">No hay Tickets disponibles</li>
+    }
+  </ul>
+</section> -->
+
+<section class="ticket-list-section">
+  <h2>Lista de Tickets</h2>
+  <div class="ticket-grid">
+    @for (ticket of localTickets; track ticket) {
+      <div class="ticket-card">
+        <div class="card-header">
+          <h3>#{{ ticket.ticket_id }}</h3>
+        </div>
+        <div class="card-body">
+          <h1 class="card-title">{{ ticket.title }}</h1>
+          <p class="card-content">{{ ticket.content || 'Descripción no disponible' }}</p>
+          <p class="card-status" [class.completed]="ticket.status">
+            {{ ticket.status ? 'Completada' : 'Pendiente' }}
+          </p>
+        </div>
+        <button class="modify-button" [routerLink]="['/tickets', ticket.ticket_id]">Trabajar</button>
+      </div>
+    } @empty {
+      <p class="no-tickets">No hay tareas disponibles</p>
+    }
+  </div>
+</section>

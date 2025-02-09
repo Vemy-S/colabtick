@@ -1,0 +1,19 @@
+<nav class="navbar">
+
+    <div class="navbar-logo">
+       <p>{{logoName}}</p>
+    </div>
+  
+    <ul class="navbar-links">
+      <li><a href="#" class="nav-link">Inicio</a></li>
+      <li><a [routerLink]="['/tickets']" class="nav-link">Tickets</a></li>
+      <li><a href="#" class="nav-link">Equipo</a></li>
+      <li><a href="#" class="nav-link">Configuración</a></li><p>{{userActive.email}}</p>
+    </ul>
+
+    
+  
+    <div class="navbar-actions">
+      <button class="nav-button" [routerLink]="['/create']">Ir a crear ticket</button>
+    </div>
+  </nav>
