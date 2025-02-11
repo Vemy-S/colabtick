@@ -1,19 +1,21 @@
-import { Body, Controller, HttpCode, HttpStatus, Post, Req } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { CompanyService } from '../services/company.service';
-import { Request } from 'express';
-import { CompanyDto } from '../dto/company-dto';
 import { requestWithUser } from 'types';
-
+import { CompanyDto } from '../dto/company-dto';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-guard.guard';
+import { Response } from 'express';
 
 @Controller('company')
 export class CompanyController {
     constructor(private companyService: CompanyService ) {}
 
-    @Post()
+    @Post('create')
     @HttpCode(201)
-    createCompany(@Body() CompanyDto, @Req() req: requestWithUser){
-
-        // AGREGAR ROLE AL PAYLOAD Y TYPE.
-        return this.companyService.createGroup(CompanyDto, req.user.role )
+    @UseGuards(JwtAuthGuard)
+    async createCompany(@Body() companyDetails: CompanyDto, @Req() req: requestWithUser, @Res() res: Response){
+        const { user_id } = req.user
+        const { company, acces_token } = await this.companyService.createGroup(companyDetails, user_id)
+        res.cookie('token', acces_token )
+        return company;
     }
 }

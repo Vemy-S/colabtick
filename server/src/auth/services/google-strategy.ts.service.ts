@@ -31,10 +31,11 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     });
 
     const payload = { email: user.email, user_id: user.user_id };
+
     if(!payload){
       throw new HttpException('No payload provided', HttpStatus.UNAUTHORIZED)
     }
-    console.log(payload)
+    console.log('payload', payload)
     const accessToken = this.jwtService.sign(payload);
 
     const userWithToken = {

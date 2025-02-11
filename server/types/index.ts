@@ -11,6 +11,7 @@ export interface Payload {
     email: string,
     user_id: number
     accessToken?: string
+    role?: roles | null
 }
 
 export interface requestWithUser extends Request {

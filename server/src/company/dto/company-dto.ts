@@ -10,7 +10,4 @@ export class CompanyDto {
     @IsNotEmpty()
     acces_key: string
 
-    @IsNumber()
-    @IsNotEmpty()
-    company_authorId: number
 }

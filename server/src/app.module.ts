@@ -11,9 +11,10 @@ import { UserModule } from './user/user.module';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
 import { JwtStrategy } from './auth/services/jwt-strategy.service';
+import { CompanyModule } from './company/company.module';
 
 @Module({
-  imports: [TicketModule, AuthModule, UserModule, ConfigModule.forRoot({
+  imports: [TicketModule, AuthModule, UserModule, CompanyModule, ConfigModule.forRoot({
     isGlobal: true
   })],
   controllers: [AppController],
