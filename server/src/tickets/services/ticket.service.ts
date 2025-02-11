@@ -13,7 +13,9 @@ export class TicketService {
             throw new HttpException('No user id provided', HttpStatus.BAD_REQUEST)
         } 
 
-        if(!ticket || ![enumStatus.COMPLETED, enumStatus.PENDING, enumStatus.FINISHED].includes(ticket.status)){
+        if(!ticket || ![enumStatus.COMPLETED, enumStatus.BLOCKED, enumStatus.FINISHED, 
+            enumStatus.ASSIGNED, enumStatus.TAKED, enumStatus.UNASSIGNED
+        ].includes(ticket.status)){
             throw new HttpException('Invalid ticket', HttpStatus.BAD_REQUEST)
         } 
      
@@ -22,10 +24,11 @@ export class TicketService {
             title: ticket.title,
             content: ticket.content,
             status: ticket.status,
-            authorId: user_id
+            authorId: user_id,
+            companyId: 'Any... Test' 
            }
         })
-
+        
         return newTicket
     }
 

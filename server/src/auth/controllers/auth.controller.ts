@@ -4,6 +4,7 @@ import { requestWithUser } from 'types';
 import { Response } from 'express';
 import { GoogleAuthGuard } from '../guards/google-oauth.guard';
 import { JwtAuthGuard } from '../guards/jwt-guard.guard';
+import { Roles } from '../decorators/company-roles-decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -27,6 +28,7 @@ export class AuthController {
     }
 
     @Get('test')
+    @Roles('USER')
     @UseGuards(JwtAuthGuard)
     test(@Req() req: requestWithUser){
         return {
