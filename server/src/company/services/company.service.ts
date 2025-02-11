@@ -5,7 +5,7 @@ import { CompanyDto } from '../dto/company-dto';
 @Injectable()
 export class CompanyService {
     constructor(private prisma: PrismaService) {}
-    createGroup(company: CompanyDto){
+    createGroup(company: CompanyDto, role: string){
         if(!company){
             throw new HttpException('No company info provided', HttpStatus.BAD_REQUEST)
         }
@@ -16,5 +16,8 @@ export class CompanyService {
                 company_authorId: company.company_authorId
             }
         })
+
+        //crear rol administrador del usuario
+        
     }
 }
