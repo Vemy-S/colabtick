@@ -62,7 +62,7 @@ export class CompanyInvitationService {
       company_id: invitationData.company_id,
       companyAuthorId: company_authorId,
     };
-    
+
     const invitation_token =  this.jwtService.sign(payload, {
       secret: this.configService.get('JWT_INVITATION_KEY'),
       expiresIn: '15m',
