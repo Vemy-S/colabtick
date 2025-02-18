@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, Req, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-guard.guard';
 import { requestWithUser } from 'types';
 import { CompanyInvitationService } from '../services/company-invitation.service';
@@ -13,8 +13,13 @@ export class CompanyInvitationController {
     @Post('invitation')
     @UseGuards(JwtAuthGuard)
     async generateInvitation(@Req() req: requestWithUser, @Body() invitationData: invitationDataDto){
-        await this.companyInvitationService.generateInvitation(req.user.user_id, invitationData);
+        return await this.companyInvitationService.generateInvitation(req.user.user_id, invitationData);
     }
 
-   
+    @Get('invitation')
+    @UseGuards(JwtAuthGuard)
+    async validateInvitation(@Req() req: requestWithUser, @Query('token') token: string, @Query('uuid') uuid: string){
+        return await this.companyInvitationService.validateInvitation(req.user.user_id, token, uuid);
+    }
+
 }
