@@ -25,14 +25,6 @@ export class CompanyInvitationService {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
 
-    const userToSendInvitation = await this.prisma.user.findUnique({
-      where: { email: invitationData.emailToSend }
-    })
-
-    if (!userToSendInvitation) {
-      throw new HttpException('User to send invitation not found', HttpStatus.NOT_FOUND);
-    }
-
     const isAdmin = await this.prisma.userRole.findUnique({
       where: {
         userId_companyId: {
@@ -68,21 +60,49 @@ export class CompanyInvitationService {
       expiresIn: '15m',
     });
 
-    const userSend = {
-      name: userSendInvitation.displayName,
-      email: userSendInvitation.email
-    }
-
-    const userToSend = {
-      name: userToSendInvitation.displayName,
-      email: userToSendInvitation.email
-    }
+    const invitation_url = `${this.configService.get('BASE_FRONTEND_URL')}/invitation?token=${invitation_token}`
 
     return {
-      invitation_token,
+      invitation_url,
       company_name: company.company_name,
-      userSend,
-      userToSend
     }
+  }
+
+  async validateInvitation(user_invited : User['user_id'], token: string, uuid: string){
+    if(!user_invited || !token || !uuid ){
+      throw new HttpException('user_id, token or uuid not provided', HttpStatus.UNAUTHORIZED)
+    }
+
+    const payload = this.jwtService.verify(token, {
+      secret: this.configService.get('JWT_INVITATION_KEY')
+    })
+
+    const { company_id } = payload;
+
+    if(uuid !== company_id){
+      throw new HttpException('UUID is not coincident', HttpStatus.UNAUTHORIZED)
+    }
+
+    const userInvited = await this.prisma.user.findUnique({
+      where: { user_id: user_invited },
+      include: { company: true }
+    }) 
+
+    if(!userInvited){
+      throw new HttpException('User is not logged in', HttpStatus.UNAUTHORIZED)
+    }
+
+    const alreadyMember = userInvited.company.some(userCompany => userCompany.company_id === company_id)
+
+    if(alreadyMember){
+      throw new HttpException('User already exists', HttpStatus.BAD_REQUEST)
+    }
+
+    const updatedCompanyUser = await this.prisma.user.update({
+      where: { user_id: userInvited.user_id },
+      data: { company : company_id }
+    }) 
+
+    return `${updatedCompanyUser.displayName} accepted succesfully`
   }
 }
