@@ -22,7 +22,8 @@ export class TicketController {
     @HttpCode(201)
     @UseGuards(JwtAuthGuard)
     async createTicket(@Body() ticket: createTicketDto, @Req() req: any){
-        return await this.ticketService.createTicket(ticket, req.user.user_id);
+        const { user_id, userRoles } = req.user
+        return await this.ticketService.createTicket(ticket, user_id, userRoles);
     }
 
     @Post('delete')
