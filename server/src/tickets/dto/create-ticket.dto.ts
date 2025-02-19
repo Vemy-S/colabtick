@@ -13,4 +13,8 @@ export class createTicketDto {
     @IsNotEmpty()
     status: status
 
+    @IsString()
+    @IsNotEmpty()
+    company_id: string
+
 }

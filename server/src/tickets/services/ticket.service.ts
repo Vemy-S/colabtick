@@ -1,14 +1,14 @@
 import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/libs/prisma.service';
 import { createTicketDto } from 'src/tickets/dto/create-ticket.dto';
-import { status as enumStatus } from '@prisma/client';
+import { status as enumStatus, UserRole } from '@prisma/client';
 
 @Injectable()
 export class TicketService {
 
     constructor(private prisma: PrismaService) {}
 
-    async createTicket(ticket: createTicketDto, user_id: number){
+    async createTicket(ticket: createTicketDto, user_id: number, userRoles: UserRole[]){
         if(!user_id){
             throw new HttpException('No user id provided', HttpStatus.BAD_REQUEST)
         } 
@@ -18,6 +18,12 @@ export class TicketService {
         ].includes(ticket.status)){
             throw new HttpException('Invalid ticket', HttpStatus.BAD_REQUEST)
         } 
+
+        const someCompanyId = userRoles.some( userCompany => userCompany.companyId === ticket.company_id )
+
+        if(!someCompanyId){
+            throw new HttpException('Company is not coincident', HttpStatus.UNAUTHORIZED)
+        }
      
         const newTicket = await this.prisma.ticket.create({
            data: {
@@ -25,7 +31,7 @@ export class TicketService {
             content: ticket.content,
             status: ticket.status,
             authorId: user_id,
-            companyId: 'Any... Test' 
+            companyId: ticket.company_id
            }
         })
         
