@@ -1,13 +1,9 @@
 import { Component, inject } from '@angular/core';
-import { FormControl, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CompanyService } from './services/company.service';
 import { DraftCompany } from '../../types';
+import { ItemCompanyForm } from '../../types';
 
-interface ItemCompanyForm {
-  companyName: FormControl<string>,
-  companyAuthorId: FormControl<number>
-  accesKey: FormControl<string>
-}
 
 @Component({
   selector: 'app-create-company',
@@ -19,12 +15,8 @@ export class CreateCompanyComponent {
   private fbCompany = inject(NonNullableFormBuilder)
   private companyService = inject(CompanyService)
 
-  //Get LocalStorage...
-  fakeUserId = 0;
-
   formCompany = this.fbCompany.group<ItemCompanyForm>({
     companyName: this.fbCompany.control('', { validators: [Validators.required] }),
-    companyAuthorId: this.fbCompany.control(this.fakeUserId , { validators: [Validators.required] }),
     accesKey: this.fbCompany.control('', { validators: [Validators.required] })
   })
 
@@ -33,7 +25,6 @@ export class CreateCompanyComponent {
   submitForm(){
     const newCompany: DraftCompany = {
       company_name: this.formCompany.value.companyName!,
-      company_authorId: this.formCompany.value.companyAuthorId!,
       acces_key: this.formCompany.value.accesKey!
     }
 
