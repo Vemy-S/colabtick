@@ -1,0 +1,15 @@
+<form [formGroup]="formCompany">
+    <h1>Crear Company</h1>
+
+    <div>
+        <label for="companyName">Nombre de la Compañia: </label>
+        <input type="text" id="companyName" formControlName="companyName">
+    </div>
+
+    <div>
+        <label for="accesKey">Clave de acceso: </label>
+        <input type="password" id="accesKey" formControlName="accesKey">
+    </div>
+
+    <button (click)="submitForm()">Crear Company</button>
+</form>
