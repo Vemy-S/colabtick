@@ -67,4 +67,15 @@ export class CompanyService {
             throw new HttpException('Error creating company', HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    async getCompanies(user_id: User['user_id']){
+        const user = this.prisma.user.findUnique({
+            where: { user_id },
+            include: { company: true }
+        })
+
+        const { company } = user
+        console.log(company)
+        return company;
+    }
 }
