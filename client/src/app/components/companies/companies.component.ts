@@ -1,0 +1,18 @@
+import { Component, inject, OnInit, Signal } from '@angular/core';
+import { GetCompaniesService } from './services/get-companies.service';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { RouterLink } from '@angular/router';
+
+@Component({
+  selector: 'app-companies',
+  imports: [RouterLink],
+  templateUrl: './companies.component.html',
+  styleUrl: './companies.component.css'
+})
+export class CompaniesComponent{
+  private getCompaniesServices = inject(GetCompaniesService)
+
+  signalCompanies: Signal<any | undefined > = toSignal(this.getCompaniesServices.getCompanies())
+
+
+}
