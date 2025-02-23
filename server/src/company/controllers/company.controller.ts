@@ -24,6 +24,6 @@ export class CompanyController {
     @HttpCode(200)
     async getCompanies(@Req() req: requestWithUser){
         const { user_id } = req.user
-        return this.companyService.getCompanies(user_id);
+        return await this.companyService.getCompanies(user_id);
     }
 }
