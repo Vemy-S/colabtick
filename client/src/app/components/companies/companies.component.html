@@ -1,3 +1,9 @@
-@let localCompanies = signalCompanies();
+@let companies = signalCompanies();
 
-<p>{{ localCompanies }}</p>
+<ul>
+    @for (company of companies; track company.company_id) {
+        <li>{{company.company_name}}</li>
+        <li>{{company.createdAt | date: 'short'}} </li>
+    }
+</ul>
+

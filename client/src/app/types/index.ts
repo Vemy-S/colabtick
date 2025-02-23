@@ -24,7 +24,6 @@ export interface ItemCompanyForm {
   accesKey: FormControl<string>
 }
 
-
 export interface Company {
   company_id: string,
   company_name: string,
@@ -36,4 +35,5 @@ export interface Company {
 }
 
 export type DraftCompany = Omit<Company, 'company_id' | 'tickets' | 'userRoles' | 'createdAt' | 'company_authorId'>
+export type Companies = Omit<Company, 'acces_key' | 'tickets' | 'userRoles' | 'company_authorId'>[]
 export type DraftTicket = Omit<Ticket, 'ticket_id'>
