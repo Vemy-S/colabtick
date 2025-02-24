@@ -12,7 +12,7 @@ export class AllCompanyService {
   private readonly BASE_URL = enviroment.companyInvitation
 
   getCompany(): Observable<CompanyWithOutAccesKey>{
-    return this.http.get<CompanyWithOutAccesKey>(this.BASE_URL)
+    return this.http.get<CompanyWithOutAccesKey>(`${this.BASE_URL}/companyId`)
   }
 
 }
