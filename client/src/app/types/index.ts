@@ -35,5 +35,6 @@ export interface Company {
 }
 
 export type DraftCompany = Omit<Company, 'company_id' | 'tickets' | 'userRoles' | 'createdAt' | 'company_authorId'>
+export type CompanyWithOutAccesKey = Omit<Company, 'acces_key'>
 export type Companies = Omit<Company, 'acces_key' | 'tickets' | 'userRoles' | 'company_authorId'>[]
 export type DraftTicket = Omit<Ticket, 'ticket_id'>
