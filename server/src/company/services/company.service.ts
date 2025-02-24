@@ -67,6 +67,34 @@ export class CompanyService {
             throw new HttpException('Error creating company', HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    async getCompany(user_id: User['user_id'], companyId: string){
+    
+        const user = await this.prisma.user.findUnique({
+            where: { user_id },
+            include: { company: true }
+        })
+
+        if(!user){
+            throw new HttpException('User doesnt exist', HttpStatus.NOT_FOUND)
+        }
+
+        const { company } = user
+        const userCompaniesIds = company.map((company) => company.company_id)
+
+        const isMatchCompany = userCompaniesIds.includes(companyId)
+        if(!isMatchCompany){
+            throw new HttpException('Access denied: This company does not belong to the user', HttpStatus.FORBIDDEN)
+        }
+
+        const companyFound = await this.prisma.company.findUnique({
+            where: { company_id: companyId }
+        })
+
+        const { acces_key, ...CompanyWithOutAccesKey } = companyFound;
+
+        return CompanyWithOutAccesKey;
+    }
     
     async getCompanies(user_id: User['user_id']){
         const user = await this.prisma.user.findUnique({
