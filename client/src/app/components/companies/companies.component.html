@@ -2,7 +2,7 @@
 
 <ul>
     @for (company of companies; track company.company_id) {
-        <button [routerLink]="['companies', company.company_id]">
+        <button [routerLink]="[company.company_id]">
             <li>{{company.company_name}}</li>
             <li>{{company.createdAt | date: 'short'}} </li>
             <li>{{company.company_id}}</li>

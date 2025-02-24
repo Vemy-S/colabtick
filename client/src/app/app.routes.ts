@@ -5,6 +5,7 @@ import { CreateTicketComponent } from './components/create-tickets/create-ticket
 import { LoginComponent } from './components/login/login.component';
 import { CreateCompanyComponent } from './components/create-company/create-company.component';
 import { CompaniesComponent } from './components/companies/companies.component';
+import { CompanyComponent } from './components/company/company.component';
 
 export const routes: Routes = [
     { path: 'tickets', component: TicketsComponent },
@@ -13,5 +14,5 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'createCompany', component: CreateCompanyComponent},
     { path: 'companies', component: CompaniesComponent },
-    { path: 'companies/:id',}
+    { path: 'companies/:id', component: CompanyComponent}
 ];
