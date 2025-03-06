@@ -9,7 +9,7 @@ import { Companies } from '../../../types';
 })
 export class GetCompaniesService {
   private http = inject(HttpClient)
-  private readonly BASE_URL = enviroment.apiCompany;
+  private readonly BASE_URL = enviroment.apiCompanies;
 
   getCompanies(): Observable<Companies>{
     return this.http.get<Companies>(this.BASE_URL, { withCredentials: true });
