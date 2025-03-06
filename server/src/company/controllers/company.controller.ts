@@ -19,16 +19,6 @@ export class CompanyController {
         return company;
     }
 
-    @Get(':id')
-    @UseGuards(JwtAuthGuard)
-    @HttpCode(200)
-    async getCompany(@Req() req: requestWithUser, @Param('id') companyId: string){
-        const { user_id } = req.user 
-        console.log(companyId)
-        return this.companyService.getCompany(user_id, companyId)
-
-    }
-
     @Get('companies')
     @UseGuards(JwtAuthGuard)
     @HttpCode(200)
@@ -37,5 +27,13 @@ export class CompanyController {
         return await this.companyService.getCompanies(user_id);
     }
 
-   
+    @Get(':id')
+    @UseGuards(JwtAuthGuard)
+    @HttpCode(200)
+    async getCompany(@Req() req: requestWithUser, @Param('id') companyId: string){
+        const { user_id } = req.user 
+        console.log(companyId)
+        return this.companyService.getCompany(user_id, companyId)
+    }
+
 }
