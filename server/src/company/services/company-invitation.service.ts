@@ -1,7 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Company, roles, User } from '@prisma/client';
 import { PrismaService } from 'src/libs/prisma.service';
-import { invitationDataDto } from '../dto/invitationData-dto';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 
@@ -15,7 +14,7 @@ export class CompanyInvitationService {
 
   async generateInvitation(
     company_authorId: User['user_id'],
-    invitationData: invitationDataDto,
+    company_id: Company['company_id']
   ) {
     const userSendInvitation = await this.prisma.user.findUnique({
       where: { user_id: company_authorId },
@@ -29,7 +28,7 @@ export class CompanyInvitationService {
       where: {
         userId_companyId: {
           userId: company_authorId,
-          companyId: invitationData.company_id,
+          companyId: company_id
         },
         role: roles.ADMINISTRATOR
       },
@@ -43,7 +42,7 @@ export class CompanyInvitationService {
     }
 
     const company = await this.prisma.company.findUnique({
-      where: { company_id: invitationData.company_id },
+      where: { company_id },
     });
 
     if (!company) {
@@ -51,7 +50,7 @@ export class CompanyInvitationService {
     }
 
     const payload = {
-      company_id: invitationData.company_id,
+      company_id,
       companyAuthorId: company_authorId,
     };
     
@@ -95,7 +94,7 @@ export class CompanyInvitationService {
     const alreadyMember = userInvited.company.some(userCompany => userCompany.company_id === company_id)
 
     if(alreadyMember){
-      throw new HttpException('User already exists', HttpStatus.BAD_REQUEST)
+      throw new HttpException('User already exists in the company', HttpStatus.BAD_REQUEST)
     }
 
     const updatedCompanyUser = await this.prisma.user.update({

@@ -4,19 +4,20 @@ import { requestWithUser } from 'types';
 import { CompanyInvitationService } from '../services/company-invitation.service';
 import { invitationDataDto } from '../dto/invitationData-dto';
 import { MailInvitationService } from '../services/mail-invitation.service';
+import { Company } from '@prisma/client';
 
 @Controller('company-invitation')
 export class CompanyInvitationController {
 
     constructor(private companyInvitationService: CompanyInvitationService, private mailInvitationService: MailInvitationService) {}
     
-    @Post('invitation')
+    @Post('generate')
     @UseGuards(JwtAuthGuard)
-    async generateInvitation(@Req() req: requestWithUser, @Body() invitationData: invitationDataDto){
-        return await this.companyInvitationService.generateInvitation(req.user.user_id, invitationData);
+    async generateInvitation(@Req() req: requestWithUser, @Body() company_id: Company['company_id']){
+        return await this.companyInvitationService.generateInvitation(req.user.user_id, company_id);
     }
 
-    @Get('invitation')
+    @Get('validate')
     @UseGuards(JwtAuthGuard)
     async validateInvitation(@Req() req: requestWithUser, @Query('token') token: string, @Query('uuid') uuid: string){
         return await this.companyInvitationService.validateInvitation(req.user.user_id, token, uuid);
