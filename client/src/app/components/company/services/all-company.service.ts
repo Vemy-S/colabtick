@@ -11,8 +11,11 @@ export class AllCompanyService {
   private http = inject(HttpClient)
   private readonly BASE_URL = enviroment.apiCompany
 
-  getCompany(): Observable<CompanyWithOutAccesKey>{
-    return this.http.get<CompanyWithOutAccesKey>(`${this.BASE_URL}/companyId`)
+  getCompany(companyId: string): Observable<CompanyWithOutAccesKey>{
+    console.log('getCompany ID', companyId)
+    return this.http.get<CompanyWithOutAccesKey>(`${this.BASE_URL}/${companyId}`, {
+      withCredentials: true
+    })
   }
 
 }

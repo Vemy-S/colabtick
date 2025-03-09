@@ -1,4 +1,4 @@
-import { Component, inject, Signal } from '@angular/core';
+import { Component, inject, OnInit, Signal } from '@angular/core';
 import { GetCompaniesService } from './services/get-companies.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
@@ -16,4 +16,5 @@ export class CompaniesComponent{
 
   signalCompanies: Signal<Companies | undefined > = toSignal(this.getCompaniesServices.getCompanies(), { initialValue: []  })
 
+ 
 }
