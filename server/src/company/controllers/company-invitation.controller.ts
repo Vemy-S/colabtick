@@ -2,9 +2,7 @@ import { Body, Controller, Get, Param, Post, Query, Req, UseGuards } from '@nest
 import { JwtAuthGuard } from 'src/auth/guards/jwt-guard.guard';
 import { requestWithUser } from 'types';
 import { CompanyInvitationService } from '../services/company-invitation.service';
-import { invitationDataDto } from '../dto/invitationData-dto';
 import { MailInvitationService } from '../services/mail-invitation.service';
-import { Company } from '@prisma/client';
 
 @Controller('company-invitation')
 export class CompanyInvitationController {
@@ -13,7 +11,8 @@ export class CompanyInvitationController {
     
     @Post('generate')
     @UseGuards(JwtAuthGuard)
-    async generateInvitation(@Req() req: requestWithUser, @Body() company_id: Company['company_id']){
+    async generateInvitation(@Req() req: requestWithUser, @Body() invitationDetails: any){
+        const { company_id } = invitationDetails 
         return await this.companyInvitationService.generateInvitation(req.user.user_id, company_id);
     }
 

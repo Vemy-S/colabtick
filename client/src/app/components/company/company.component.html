@@ -1,7 +1,10 @@
 @let signalCompany = companyDetails();
+@let signalInvitation = invitationReceived();
 
 <p>{{signalCompany?.company_id}}</p>
 <p>{{signalCompany?.company_name}}</p>
 <p>{{signalCompany?.createdAt | date: 'short'}}</p>
 
 <button (click)="generateLink()">Generar link de invitacion</button>
+<p>Estaras invitando para {{signalInvitation?.company_name}}</p>
+<p>{{signalInvitation?.invitation_url}}</p>

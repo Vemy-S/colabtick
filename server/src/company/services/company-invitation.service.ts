@@ -59,7 +59,7 @@ export class CompanyInvitationService {
       expiresIn: '15m',
     });
 
-    const invitation_url = `${this.configService.get('BASE_FRONTEND_URL')}/invitation?token=${invitation_token}`
+    const invitation_url = `${this.configService.get('BASE_FRONTEND_URL')}/validate?token=${invitation_token}`
 
     return {
       invitation_url,

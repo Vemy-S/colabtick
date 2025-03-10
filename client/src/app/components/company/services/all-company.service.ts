@@ -19,9 +19,10 @@ export class AllCompanyService {
   }
 
   getInvitationLink(companyId: string): Observable<invitationData>{
-    return this.http.post<invitationData>(`${this.BASE_URL}-invitation/generate`, companyId, {
-      withCredentials: true
-    })
+    return this.http.post<invitationData>(`${this.BASE_URL}-invitation/generate`, 
+      { company_id: companyId },
+      { withCredentials: true }
+    )
   }
 
 }
