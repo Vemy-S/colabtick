@@ -19,6 +19,10 @@ export class CompanyInvitationController {
     @Get('validate')
     @UseGuards(JwtAuthGuard)
     async validateInvitation(@Req() req: requestWithUser, @Query('token') token: string, @Query('uuid') uuid: string){
+        console.log('token', token)
+        console.log('uuid', uuid)
+        console.log(Query)
+        console.log('user', req.user.user_id)
         return await this.companyInvitationService.validateInvitation(req.user.user_id, token, uuid);
     }
 

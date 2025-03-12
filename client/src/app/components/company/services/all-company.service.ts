@@ -25,4 +25,10 @@ export class AllCompanyService {
     )
   }
 
+  getValidateLink(token: string, uuid: string): Observable<any>{
+    return this.http.get<any>(`${this.BASE_URL}-invitation/validate?token=${token}&uuid=${uuid}`, {
+      withCredentials: true
+    })
+  }
+
 }

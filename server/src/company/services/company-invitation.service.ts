@@ -59,7 +59,7 @@ export class CompanyInvitationService {
       expiresIn: '15m',
     });
 
-    const invitation_url = `${this.configService.get('BASE_FRONTEND_URL')}/validate?token=${invitation_token}`
+    const invitation_url = `${this.configService.get('BASE_FRONTEND_URL')}/validate?token=${invitation_token}&uuid=${company_id}`
 
     return {
       invitation_url,
@@ -97,11 +97,14 @@ export class CompanyInvitationService {
       throw new HttpException('User already exists in the company', HttpStatus.BAD_REQUEST)
     }
 
-    const updatedCompanyUser = await this.prisma.user.update({
-      where: { user_id: userInvited.user_id },
-      data: { company : company_id }
-    }) 
-
-    return `${updatedCompanyUser.displayName} accepted succesfully`
+    const newUserIntoCompany = await this.prisma.userRole.create({
+      data: {
+        userId: userInvited.user_id,
+        companyId: company_id,
+        role: 'USER'
+      }
+    })
+    console.log(newUserIntoCompany)
+    return `${newUserIntoCompany} accepted succesfully`
   }
 }
