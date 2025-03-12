@@ -2,7 +2,7 @@ import { Component, inject, OnInit, Signal } from '@angular/core';
 import { GetCompaniesService } from './services/get-companies.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
-import { Companies } from '../../types';
+import { userCompanies } from '../../types';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -14,7 +14,6 @@ import { DatePipe } from '@angular/common';
 export class CompaniesComponent{
   private getCompaniesServices = inject(GetCompaniesService)
 
-  signalCompanies: Signal<Companies | undefined > = toSignal(this.getCompaniesServices.getCompanies(), { initialValue: []  })
+  signalCompanies: Signal<userCompanies[] | undefined > = toSignal(this.getCompaniesServices.getCompanies())
 
- 
 }

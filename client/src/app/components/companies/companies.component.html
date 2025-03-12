@@ -1,12 +1,14 @@
 @let companies = signalCompanies();
 
 <ul>
-    @for (company of companies; track company.company_id) {
-        <button [routerLink]="['/company/companies', company.company_id]">
-            <li>{{company.company_name}}</li>
-            <li>{{company.createdAt | date: 'short'}} </li>
-            <li>{{company.company_id}}</li>
+    @for (company of companies; track company.company.company_id) {
+        <button [routerLink]="['/company/companies', company.company.company_id]">
+            <li>{{company.company.company_name}}</li>
+            <li>{{company.company.createdAt| date: 'short'}} </li>
+            <li>{{company.company.company_id}}</li>
+            <li>Tu rol: {{company.role}}</li>
         </button>
     }
 </ul>
+
 

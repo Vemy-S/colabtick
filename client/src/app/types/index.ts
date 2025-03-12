@@ -34,10 +34,20 @@ export interface Company {
   acces_key: string
 }
 
+export interface userCompanies {
+  role: string,
+  company: {
+    company_name: string,
+    company_id: string,
+    createdAt: Date
+  }
+}
+
 export type DraftCompany = Omit<Company, 'company_id' | 'tickets' | 'userRoles' | 'createdAt' | 'company_authorId'>
 export type CompanyWithOutAccesKey = Omit<Company, 'acces_key'>
 export type Companies = Omit<Company, 'acces_key' | 'tickets' | 'userRoles' | 'company_authorId'>[]
 export type DraftTicket = Omit<Ticket, 'ticket_id'>
+
 
 
 export interface invitationData {

@@ -97,22 +97,21 @@ export class CompanyService {
     }
     
     async getCompanies(user_id: User['user_id']){
-        const user = await this.prisma.user.findUnique({
-            where: { user_id },
-            include: { company: true }
+        const companies = await this.prisma.userRole.findMany({
+            where: { userId: user_id },
+            include: { company: true },
+        }) 
+        const userCompanies = companies.map(({ role, company }) => {
+            const { company_name, company_id, createdAt } = company
+            return {
+                role,
+                company: {
+                    company_name,
+                    company_id,
+                    createdAt
+                }
+            }
         })
-
-        const { company } = user
-        
-        const companies = company.map((company) => {
-           return {
-            company_id: company.company_id,
-            company_name: company.company_name,
-            createdAt: company.createdAt
-           }
-        })
-        console.log('******companies******', companies)
-
-        return companies;
+        return userCompanies;
     }
 }
