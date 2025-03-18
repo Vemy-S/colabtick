@@ -9,7 +9,7 @@ export class TicketService {
     constructor(private prisma: PrismaService) {}
 
     async createTicket(ticket: createTicketDto, user_id: number, userRoles: UserRole[]){
-        if(!user_id){
+   /*      if(!user_id){
             throw new HttpException('No user id provided', HttpStatus.BAD_REQUEST)
         } 
 
@@ -35,7 +35,8 @@ export class TicketService {
            }
         })
         
-        return newTicket
+       */
+        return 'ola'
     }
 
     async getTickets(){

@@ -8,3 +8,6 @@
 <button (click)="generateLink()">Generar link de invitacion</button>
 <p>Estaras invitando para {{signalInvitation?.company_name}}</p>
 <p>{{signalInvitation?.invitation_url}}</p>
+
+
+<button [routerLink]="['createTicket']">Ir a crear ticket</button>

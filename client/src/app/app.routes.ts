@@ -11,7 +11,7 @@ import { InvitationValidateComponent } from './components/invitation-validate/in
 export const routes: Routes = [
     { path: 'tickets', component: TicketsComponent },
     { path: 'tickets/:id', component: TicketDetailComponent },
-    { path: 'createTicket', component: CreateTicketComponent },
+    { path: 'company/companies/:id/createTicket', component: CreateTicketComponent },
     { path: 'login', component: LoginComponent },
     { path: 'createCompany', component: CreateCompanyComponent},
     { path: 'company/companies', component: CompaniesComponent },

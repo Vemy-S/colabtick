@@ -1,8 +1,9 @@
-import { Body, Controller, Get, Param, Post, Query, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, Redirect, Req, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-guard.guard';
 import { requestWithUser } from 'types';
 import { CompanyInvitationService } from '../services/company-invitation.service';
 import { MailInvitationService } from '../services/mail-invitation.service';
+import { ConfigService } from '@nestjs/config';
 
 @Controller('company-invitation')
 export class CompanyInvitationController {

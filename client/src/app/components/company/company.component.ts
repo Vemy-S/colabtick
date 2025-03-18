@@ -1,12 +1,12 @@
 import { Component, inject, OnInit, signal, Signal } from '@angular/core';
 import { AllCompanyService } from './services/all-company.service';
 import { CompanyWithOutAccesKey, invitationData } from '../../types';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-company',
-  imports: [DatePipe],
+  imports: [DatePipe, RouterLink],
   templateUrl: './company.component.html',
   styleUrl: './company.component.css'
 })
@@ -20,7 +20,7 @@ export class CompanyComponent implements OnInit{
   ngOnInit(): void {
    this.router.params.subscribe(param => {
     this.companyId.set(param['id'])
-    this.fetchDetails(param['id'])
+    this.fetchCompanyDetails(param['id'])
    })
   }
 
@@ -36,12 +36,14 @@ export class CompanyComponent implements OnInit{
     }
   }
 
-  private fetchDetails(company_id: string) {
+  private fetchCompanyDetails(company_id: string) {
     if(company_id){
       this.allCompanyService.getCompany(company_id).subscribe(data => {
         this.companyDetails.set(data)
       })
     }
   }
+
+
 
 }

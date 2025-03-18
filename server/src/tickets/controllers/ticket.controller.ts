@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, Param, ParseIntPipe, Post, UseGuards, Req } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Param, ParseIntPipe, Post, UseGuards, Req, HttpStatus } from '@nestjs/common';
 import { TicketService } from '../services/ticket.service';
 import { createTicketDto } from '../dto/create-ticket.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-guard.guard';
@@ -18,12 +18,15 @@ export class TicketController {
         return await this.ticketService.getTicket(id);
     }    
 
-    @Post('create')
+    @Post('create/:id')
     @HttpCode(201)
     @UseGuards(JwtAuthGuard)
-    async createTicket(@Body() ticket: createTicketDto, @Req() req: any){
-        const { user_id, userRoles } = req.user
-        return await this.ticketService.createTicket(ticket, user_id, userRoles);
+    async createTicket(@Body() ticket: createTicketDto, @Req() req: any, @Param('id') companyId: string){
+        return {
+            content: ticket.content,
+            status: ticket.status,
+            companyId: companyId
+        }
     }
 
     @Post('delete')
